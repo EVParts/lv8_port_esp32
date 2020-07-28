@@ -44,18 +44,16 @@ http://esp-idf.readthedocs.io/en/latest/
 
 Note:
 
-This project tries to be compatible with both the ESP-IDF v3.x and v4.0, but using the v4.0 is recommended.
+This project tries to be compatible with the ESP-IDF v4.0.
 Instructions here are given for the v4.x toolchain using `idf.py`, but it is easy to translate to make.
 For example instead of running `idf.py menuconfig`, just run `make menuconfig`.
-
-When using the ESP-IDF v3.x framework you must use `make` to build the project!.
 
 ### Build this repository standalone and run the demo.
 
 Try this first to make sure your hardware is supported, wired and configured properly.
 
 1. Get this project: `git clone --recurse-submodules
-https://github.com/lvgl/lv_port_esp32.git`
+https://github.com/wireless-tag-cn/lv_port_esp32.git`
 
 2. From its root run `idf.py menuconfig`
 
@@ -80,7 +78,7 @@ https://github.com/lvgl/lv_port_esp32.git`
 
 7. `idf.py build`
 
-8. `idf.py -p (YOUR PORT) flash` (with make this is just `make flash` - in 3.x PORT is configured in `menuconfig`)
+8. `idf.py -p (YOUR PORT) flash`
 
 
 
