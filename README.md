@@ -1,6 +1,6 @@
-# LVGL project for ESP32
+# LVGL project for wireless-tag WT\_32\_SC01
 
-This is an ESP32 demo project showcasing LVGL v7 with support for several display controllers and touch controllers.
+This is an [WT\_32\_SC01] (https://www.espressif.com/en/news/WT_32_SC01?utm_source=Espressif%27s+English+Newsletter&utm_campaign=7ae0e4cda1-EMAIL_CAMPAIGN_2020_07_28_02_08&utm_medium=email&utm_term=0_edb9bf1443-7ae0e4cda1-69576587&ct=t(EMAIL_CAMPAIGN_7_28_2020_4_27)&mc_cid=7ae0e4cda1&mc_eid=309e9b0452) from [wireless-tag](http://www.wireless-tag.cn) demo project showcasing LVGL v7 with support for several display controllers(ST7796S) and touch controllers(FT6336U).
 
 ![Example GUI_DEMO](images/new_photo.jpg)
 
@@ -18,6 +18,7 @@ Supported display controllers:
 - HX8357B/HX8357D
 - ST7789
 - ST7735S
+- ST7796S
 
 ## Monochrome
 
@@ -140,7 +141,7 @@ cmake_minimum_required(VERSION 3.5)
 set(EXTRA_COMPONENT_DIRS components/lv_port_esp32/components/lv_examples components/lv_port_esp32/components/lvgl components/lv_port_esp32/components/lvgl_esp32_drivers/lvgl_tft components/lv_port_esp32/components/lvgl_esp32_drivers/lvgl_touch components/lv_port_esp32/components/lvgl_esp32_drivers)
 
 if (NOT DEFINED PROJECT_NAME)
-	project(lvgl-demo)
+    project(lvgl-demo)
 endif (NOT DEFINED PROJECT_NAME)
 
 ```
