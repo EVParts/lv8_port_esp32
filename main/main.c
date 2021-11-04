@@ -60,8 +60,8 @@ static void lv_tick_task(void *arg) {
 //you should lock on the very same semaphore!
 SemaphoreHandle_t xGuiSemaphore;
 
-void my_touchpad_read(lv_indev_drv_t * indev, lv_indev_data_t * data) {
-  (void) touch_driver_read(indev, data);
+void v8_touch_driver_read(lv_indev_drv_t* indev, lv_indev_data_t* data) {
+    data->continue_reading = touch_driver_read(indev, data);
 }
 
 void guiTask(void *pvParameter) {
@@ -109,7 +109,7 @@ void guiTask(void *pvParameter) {
 #if CONFIG_LVGL_TOUCH_CONTROLLER != TOUCH_CONTROLLER_NONE
     lv_indev_drv_t indev_drv;
     lv_indev_drv_init(&indev_drv);
-    indev_drv.read_cb = my_touchpad_read;
+    indev_drv.read_cb = v8_touch_driver_read;
     indev_drv.type = LV_INDEV_TYPE_POINTER;
     lv_indev_drv_register(&indev_drv);
 #endif
@@ -130,7 +130,7 @@ void guiTask(void *pvParameter) {
     lv_obj_t * scr = lv_disp_get_scr_act(NULL);
 
     /*Create a Label on the currently active screen*/
-    lv_obj_t * label1 =  lv_label_create(scr, NULL);
+    lv_obj_t * label1 = lv_label_create(scr, NULL);
 
     /*Modify the Label's text*/
     lv_label_set_text(label1, "Hello\nworld!");
