@@ -1,6 +1,6 @@
 # LVGL project for wireless-tag WT\_32\_SC01
 
-This is an [WT\_32\_SC01] (https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.15d11debmmCZdd&ft=t&id=611104447515) from [wireless-tag](http://www.wireless-tag.cn) demo project showcasing LVGL v7 with support for several display controllers(ST7796S) and touch controllers(FT6336U).
+This is an [WT\_32\_SC01](https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.15d11debmmCZdd&ft=t&id=611104447515) from [wireless-tag](http://www.wireless-tag.cn) demo project showcasing LVGL v8 with support for several display controllers (ST7796S) and touch controllers (FT6336U).
 
 ![Example GUI_DEMO](images/board.jpeg)
 
