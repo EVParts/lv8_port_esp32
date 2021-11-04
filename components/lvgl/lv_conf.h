@@ -120,7 +120,7 @@ typedef int16_t lv_coord_t;
  * The graphical objects and other related data are stored here. */
 
 /* 1: use custom malloc/free, 0: use the built-in `lv_mem_alloc` and `lv_mem_free` */
-#define LV_MEM_CUSTOM      0
+#define LV_MEM_CUSTOM      1
 #if LV_MEM_CUSTOM == 0
 /* Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
 #  define LV_MEM_SIZE    ( CONFIG_LVGL_MEM_SIZE * 1024U)
@@ -160,24 +160,24 @@ typedef int16_t lv_coord_t;
 #define LV_INDEV_DEF_READ_PERIOD          CONFIG_LVGL_INDEV_DEF_READ_PERIOD
 
 /* Drag threshold in pixels */
-#define LV_INDEV_DEF_DRAG_LIMIT           CONFIG_LVGL_INDEV_DEF_DRAG_LIMIT
+// #define LV_INDEV_DEF_DRAG_LIMIT           CONFIG_LVGL_INDEV_DEF_DRAG_LIMIT
 
 /* Drag throw slow-down in [%]. Greater value -> faster slow-down */
-#define LV_INDEV_DEF_DRAG_THROW           CONFIG_LVGL_INDEV_DEF_DRAG_THROW
+// #define LV_INDEV_DEF_DRAG_THROW           CONFIG_LVGL_INDEV_DEF_DRAG_THROW
 
 /* Long press time in milliseconds.
  * Time to send `LV_EVENT_LONG_PRESSSED`) */
-#define LV_INDEV_DEF_LONG_PRESS_TIME      CONFIG_LVGL_INDEV_DEF_LONG_PRESS_TIME
+// #define LV_INDEV_DEF_LONG_PRESS_TIME      CONFIG_LVGL_INDEV_DEF_LONG_PRESS_TIME
 
 /* Repeated trigger period in long press [ms]
  * Time between `LV_EVENT_LONG_PRESSED_REPEAT */
-#define LV_INDEV_DEF_LONG_PRESS_REP_TIME  CONFIG_LVGL_INDEV_DEF_LONG_PRESS_REP_TIME
+// #define LV_INDEV_DEF_LONG_PRESS_REP_TIME  CONFIG_LVGL_INDEV_DEF_LONG_PRESS_REP_TIME
 
 /* Gesture threshold in pixels */
-#define LV_INDEV_DEF_GESTURE_LIMIT        CONFIG_LVGL_INDEV_DEF_GESTURE_LIMIT
+// #define LV_INDEV_DEF_GESTURE_LIMIT        CONFIG_LVGL_INDEV_DEF_GESTURE_LIMIT
 
 /* Gesture min velocity at release before swipe (pixels)*/
-#define LV_INDEV_DEF_GESTURE_MIN_VELOCITY CONFIG_LVGL_INDEV_DEF_GESTURE_MIN_VELOCITY
+// #define LV_INDEV_DEF_GESTURE_MIN_VELOCITY CONFIG_LVGL_INDEV_DEF_GESTURE_MIN_VELOCITY
 
 /*==================
  * Feature usage
@@ -941,7 +941,7 @@ typedef void * lv_font_user_data_t;
  * `LV_BIDI_DIR_AUTO` detect texts base direction */
 #if defined LVGL_BIDI_DIR_LTR
 #  define LV_BIDI_BASE_DIR_DEF      LV_BIDI_DIR_LTR
-#elif defined LVGL_BIDI_DIR_RTL 
+#elif defined LVGL_BIDI_DIR_RTL
 #  define LV_BIDI_BASE_DIR_DEF      LV_BIDI_DIR_RTL
 #elif defined LVGL_BIDI_DIR_AUTO
 #  define LV_BIDI_BASE_DIR_DEF      LV_BIDI_DIR_AUTO
@@ -1013,7 +1013,7 @@ typedef void * lv_obj_user_data_t;
 #if defined (CONFIG_LVGL_WIDGETS_USE_ARC)
     #define LV_USE_ARC      1
 #else
-    #define LV_USE_ARC      0 
+    #define LV_USE_ARC      0
 #endif
 
 /*Bar (dependencies: -)*/
@@ -1137,9 +1137,9 @@ typedef void * lv_obj_user_data_t;
 
 #if LV_USE_LABEL != 0
 /*Hor, or ver. scroll speed [px/sec] in 'LV_LABEL_LONG_ROLL/ROLL_CIRC' mode*/
-    #define LV_LABEL_DEF_SCROLL_SPEED       CONFIG_LVGL_WIDGETS_LABEL_DEF_SCROLL_SPEED
+    // #define LV_LABEL_DEF_SCROLL_SPEED       CONFIG_LVGL_WIDGETS_LABEL_DEF_SCROLL_SPEED
 /* Waiting period at beginning/end of animation cycle */
-    #define LV_LABEL_WAIT_CHAR_COUNT        CONFIG_LVGL_WIDGETS_LABEL_WAIT_CHAR_COUNT
+    // #define LV_LABEL_WAIT_CHAR_COUNT        CONFIG_LVGL_WIDGETS_LABEL_WAIT_CHAR_COUNT
 /*Enable selecting text of the label */
     #define LV_LABEL_TEXT_SEL               0
 /*Store extra some info in labels (12 bytes) to speed up drawing of very long texts*/
@@ -1300,7 +1300,7 @@ typedef void * lv_obj_user_data_t;
 
 #if LV_USE_TABVIEW != 0
 /*Time of slide animation [ms] (0: no animation)*/
-    #define LV_TABVIEW_DEF_ANIM_TIME    CONFIG_LVGL_WIDGETS_TABVIEW_SLIDE_ANIMATION 
+    #define LV_TABVIEW_DEF_ANIM_TIME    CONFIG_LVGL_WIDGETS_TABVIEW_SLIDE_ANIMATION
 #endif
 
 /*Tileview (dependencies: lv_page) */

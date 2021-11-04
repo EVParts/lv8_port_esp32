@@ -1,5 +1,5 @@
 /* LVGL Example project
- * 
+ *
  * Basic project to test LVGL on ESP32 based projects.
  *
  * This example code is in the Public Domain (or CC0 licensed, at your option.)
@@ -43,7 +43,7 @@ void guiTask(void *pvParameter);
  *   APPLICATION MAIN
  **********************/
 void app_main() {
-    
+
     //If you want to use a task to create the graphic, you NEED to create a Pinned task
     //Otherwise there can be problem such as memory corruption and so on
     xTaskCreatePinnedToCore(guiTask, "gui", 4096*2, NULL, 0, NULL, 1);
@@ -60,13 +60,17 @@ static void lv_tick_task(void *arg) {
 //you should lock on the very same semaphore!
 SemaphoreHandle_t xGuiSemaphore;
 
+void my_touchpad_read(lv_indev_drv_t * indev, lv_indev_data_t * data) {
+  (void) touch_driver_read(indev, data);
+}
+
 void guiTask(void *pvParameter) {
-    
+
     (void) pvParameter;
     xGuiSemaphore = xSemaphoreCreateMutex();
 
     lv_init();
-    
+
     /* Initialize SPI or I2C bus used by the drivers */
     lvgl_driver_init();
 
@@ -74,18 +78,18 @@ void guiTask(void *pvParameter) {
 #ifndef CONFIG_LVGL_TFT_DISPLAY_MONOCHROME
     static lv_color_t buf2[DISP_BUF_SIZE];
 #endif
-    static lv_disp_buf_t disp_buf;
+    static lv_disp_draw_buf_t disp_buf;
 
     uint32_t size_in_px = DISP_BUF_SIZE;
 
-#if defined CONFIG_LVGL_TFT_DISPLAY_CONTROLLER_IL3820 
+#if defined CONFIG_LVGL_TFT_DISPLAY_CONTROLLER_IL3820
     /* Actual size in pixel, not bytes and use single buffer */
     size_in_px *= 8;
-    lv_disp_buf_init(&disp_buf, buf1, NULL, size_in_px);
+    lv_disp_draw_buf_init(&disp_buf, buf1, NULL, size_in_px);
 #elif defined CONFIG_LVGL_TFT_DISPLAY_MONOCHROME
-    lv_disp_buf_init(&disp_buf, buf1, NULL, size_in_px);
+    lv_disp_draw_buf_init(&disp_buf, buf1, NULL, size_in_px);
 #else
-    lv_disp_buf_init(&disp_buf, buf1, buf2, size_in_px);
+    lv_disp_draw_buf_init(&disp_buf, buf1, buf2, size_in_px);
 #endif
 
     lv_disp_drv_t disp_drv;
@@ -97,13 +101,15 @@ void guiTask(void *pvParameter) {
     disp_drv.set_px_cb = disp_driver_set_px;
 #endif
 
-    disp_drv.buffer = &disp_buf;
+    disp_drv.draw_buf = &disp_buf;
+    disp_drv.hor_res = CONFIG_LVGL_DISPLAY_WIDTH;
+    disp_drv.ver_res = CONFIG_LVGL_DISPLAY_HEIGHT;
     lv_disp_drv_register(&disp_drv);
 
 #if CONFIG_LVGL_TOUCH_CONTROLLER != TOUCH_CONTROLLER_NONE
     lv_indev_drv_t indev_drv;
     lv_indev_drv_init(&indev_drv);
-    indev_drv.read_cb = touch_driver_read;
+    indev_drv.read_cb = my_touchpad_read;
     indev_drv.type = LV_INDEV_TYPE_POINTER;
     lv_indev_drv_register(&indev_drv);
 #endif
@@ -118,7 +124,7 @@ void guiTask(void *pvParameter) {
 
 #if defined CONFIG_LVGL_TFT_DISPLAY_MONOCHROME || \
     defined CONFIG_LVGL_TFT_DISPLAY_CONTROLLER_ST7735S
-    
+
     /* use a pretty small demo for monochrome displays */
     /* Get the current screen  */
     lv_obj_t * scr = lv_disp_get_scr_act(NULL);
@@ -136,7 +142,7 @@ void guiTask(void *pvParameter) {
 #else
     lv_demo_widgets();
 #endif
-    
+
     while (1) {
         vTaskDelay(1);
         //Try to lock the semaphore, if success, call lvgl stuff
