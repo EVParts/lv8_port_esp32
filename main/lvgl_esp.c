@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <math.h>
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_freertos_hooks.h"
@@ -24,30 +26,19 @@
 #include "lvgl/lvgl.h"
 #include "lvgl_helpers.h"
 
+#include "lvgl_esp.h"
 #include "lv_examples/src/lv_demo_widgets/lv_demo_widgets.h"
 
 /*********************
  *      DEFINES
  *********************/
-#define TAG "demo"
+#define TAG "LVGL ESP"
 #define LV_TICK_PERIOD_MS 10
 
 /**********************
  *  STATIC PROTOTYPES
  **********************/
 static void lv_tick_task(void *arg);
-void guiTask(void *pvParameter);
-
-
-/**********************
- *   APPLICATION MAIN
- **********************/
-void app_main() {
-
-    //If you want to use a task to create the graphic, you NEED to create a Pinned task
-    //Otherwise there can be problem such as memory corruption and so on
-    xTaskCreatePinnedToCore(guiTask, "gui", 4096*2, NULL, 0, NULL, 1);
-}
 
 static void lv_tick_task(void *arg) {
     (void) arg;
@@ -60,12 +51,11 @@ static void lv_tick_task(void *arg) {
 //you should lock on the very same semaphore!
 SemaphoreHandle_t xGuiSemaphore;
 
-void v8_touch_driver_read(lv_indev_drv_t* indev, lv_indev_data_t* data) {
+static void v8_touch_driver_read(lv_indev_drv_t* indev, lv_indev_data_t* data) {
     data->continue_reading = touch_driver_read(indev, data);
 }
 
-void guiTask(void *pvParameter) {
-
+static void guiTask(void *pvParameter) {
     (void) pvParameter;
     xGuiSemaphore = xSemaphoreCreateMutex();
 
@@ -140,7 +130,7 @@ void guiTask(void *pvParameter) {
      * 0, 0 at the end means an x, y offset after alignment*/
     lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);
 #else
-    lv_demo_widgets();
+    lv_esp_user_gui_init();
 #endif
 
     while (1) {
@@ -154,4 +144,11 @@ void guiTask(void *pvParameter) {
 
     //A task should NEVER return
     vTaskDelete(NULL);
+}
+
+esp_err_t lv_esp_init() {
+
+    //If you want to use a task to create the graphic, you NEED to create a Pinned task
+    //Otherwise there can be problem such as memory corruption and so on
+    return xTaskCreatePinnedToCore(guiTask, "gui", 4096*2, NULL, 0, NULL, 1) == pdTRUE ? ESP_OK : ESP_FAIL;
 }
